@@ -1,47 +1,50 @@
 #include <iostream>
-#include <vector>
-#include <cmath>
+// #include <vector>
+// #include <cmath>
+// #include <algorithm>
 
-// using namespace std;
-
-// Структуры
-struct Point {
-    double x;
-    double y;
-};
-
-struct Segment {
-    Point p1;
-    Point p2;
-};
-
-double length(Segment s) {
-    double dx = s.p1.x - s.p2.x;
-    double dy = s.p1.y - s.p2.y;
-
-    return sqrt(dx * dx + dy * dy);
-}
-
-double length(Segment s) {
-    double dx = s->p1.x - s -> p2.x;
-    double dy = s->p1.y - s -> p2.y;
-    return sqrt(dx * dx + dy * dy);
-}
-
-struct IntArray2D
-{
-    size_t a;
-    size_t b;
-    int ** data;
-};
 
 int main() {
-    std::cout << "Привет, Ubuntu! C++ работает122!" << std::endl;
+    // Обычные переменные
+    
+    int a = 10;
+    int* ptr_a = &a;
 
-    Point p1 = {0.4, 1.4};
-    Point p2 = {1.2, 6.3};
-    Segment s = {p1, p2};
-    IntArray2D a = {n, m, create_array2d(n, m)}
+    std::cout << "a = " << a << std::endl;
+    std::cout << "адрес в памяти на a = " << &a << std::endl;
+    std::cout << "указатель на a = " << ptr_a << std::endl;
+    std::cout << "значение по адресу указателя = " << *ptr_a << std::endl;
+    std::cout << "адрес в памяти на указатель = " << &ptr_a << std::endl;
+    std::cout << "??? = " << &*ptr_a << std::endl;
 
-    return 0;
+    std::cout << "Размер int*: " << sizeof(int*) << " байт" << std::endl;
+    std::cout << "Размер double*: " << sizeof(double*) << " байт" << std::endl;
+    std::cout << "Размер char*: " << sizeof(char*) << " байт" << std::endl;
+    std::cout << "sizeof(void*)  = " << sizeof(void*) << " байт" << std::endl;    // 8 (на 64-bit)
+
+
 }
+
+// *&a = a
+// * - это значения по адресу указателя
+// & - это адрес в памяти
+
+// Меняя значение 
+
+// Адрес можно узнать только у указателя
+// Все указатели имеют один и тот же размер - 8 байт
+
+// ПАМЯТЬ (64-битная система):
+// ┌─────────────────────────────────────────────────────┐
+// │ Адрес: 0x7FFD5E4A8B2C (8 байт = 64 бита)          │
+// │ ┌─────────────────────────────────────────────────┐ │
+// │ │ int a = 10  (4 байта)                         │ │
+// │ │ [0A 00 00 00]                                 │ │
+// │ └─────────────────────────────────────────────────┘ │
+// │                                                     │
+// │ Адрес: 0x7FFD5E4A8B30 (8 байт = 64 бита)          │
+// │ ┌─────────────────────────────────────────────────┐ │
+// │ │ int* ptr = 0x7FFD5E4A8B2C (8 байт)            │ │
+// │ │ [2C 8B 4A 5E FD 7F 00 00]                     │ │
+// │ └─────────────────────────────────────────────────┘ │
+// └─────────────────────────────────────────────────────┘
