@@ -9,6 +9,8 @@ int main() {
     
     int a = 10;
     int* ptr_a = &a;
+    int** ptr_ptr_a = &ptr_a;
+
 
     std::cout << "a = " << a << std::endl;
     std::cout << "адрес в памяти на a = " << &a << std::endl;
@@ -16,11 +18,18 @@ int main() {
     std::cout << "значение по адресу указателя = " << *ptr_a << std::endl;
     std::cout << "адрес в памяти на указатель = " << &ptr_a << std::endl;
     std::cout << "??? = " << &*ptr_a << std::endl;
+    std::cout << "ptr_ptr_a = " << ptr_ptr_a << std::endl;
+    std::cout << "ptr_ptr_a = " << *ptr_ptr_a << std::endl; // спуститься на 1 уровень к указателю
+    std::cout << "ptr_ptr_a = " << **ptr_ptr_a << std::endl; // спуститься на 1 уровень к самой переменной
 
-    std::cout << "Размер int*: " << sizeof(int*) << " байт" << std::endl;
-    std::cout << "Размер double*: " << sizeof(double*) << " байт" << std::endl;
-    std::cout << "Размер char*: " << sizeof(char*) << " байт" << std::endl;
-    std::cout << "sizeof(void*)  = " << sizeof(void*) << " байт" << std::endl;    // 8 (на 64-bit)
+
+
+    //////////////////////////
+
+    // std::cout << "Размер int*: " << sizeof(int*) << " байт" << std::endl;
+    // std::cout << "Размер double*: " << sizeof(double*) << " байт" << std::endl;
+    // std::cout << "Размер char*: " << sizeof(char*) << " байт" << std::endl;
+    // std::cout << "sizeof(void*)  = " << sizeof(void*) << " байт" << std::endl;    // 8 (на 64-bit)
 
 
 }
