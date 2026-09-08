@@ -1,3 +1,6 @@
+
+// Введение, модификаторы типов, указатели.
+
 #include <iostream>
 // #include <vector>
 // #include <cmath>
