@@ -1,10 +1,12 @@
-#include <iostream>
-#include <cmath>
-#include <cstdio>
 
-int main() {
-    FILE* gp = popen("gnuplot -persist", "w");
-    fprintf(gp, "plot sin(x)\n");
-    pclose(gp);
+#include <iostream>
+
+
+int main()
+{
+    int64_t n;
+    std::cin >> n;  
+    std::cout << (n + 1) * (n + 1) + n;
     return 0;
 }
+
