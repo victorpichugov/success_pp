@@ -179,9 +179,11 @@ struct C{
 
 }
 
+// 3.10.26 было int C::* p = C::a;
+// стало int C::* p = &C::a;
 
 int main(){
-    int C::* p = C::a;
+    int C::* p = &C::a;
     С .* p = 5;
 
 
