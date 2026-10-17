@@ -19,25 +19,34 @@
 //                                       "(" не часть пропуска и остаётся)
 //   "hi :-) w"-> "hi  w"
 //   ":-"      -> ":-"       (не за скобкой — это текст)
+
+bool isSmileyStart(const std::string& text, std::size_t pos) {
+  return text[pos] == ':' && text[pos + 1] == '-';
+}
+
+bool isFaceChar(char c) {
+  return c == ')' || c == '(' || c == '~';
+}
+
+// Time: O(n) — read только движется вперёд. Space: O(1) доп.
 std::string RemoveSmileys(std::string text) {
-    std::size_t pos = 0;
-    while (pos + 1 < text.size()) {
-        if (text[pos] == ':' && text[pos + 1] == '-') {
-            if (pos + 2 < text.size() &&
-                (text[pos + 2] == ')' || text[pos + 2] == '(')) {
-                // Замечание ревьюера #1 (точность):
-                //   erase(pos, 3) убирает ТОЛЬКО ":-" + ОДНУ скобку.
-                //   ":-)))" -> удалится ":-)", останется "))".
-                //   Правило требует убрать МАКСИМАЛЬНЫЙ пропуск.
-                //
-                // Замечание ревьюера #2 (сложность):
-                //   text.erase(pos, 3) — O(n) на вызов (сдвигает хвост).
-                //   В худшем случае O(n) таких erase => O(n^2) на функцию.
-                text.erase(pos, 3);
-                continue;  // pos не сдвигаем: пересматриваем с того же места
-            }
-        }
-        ++pos;
+  std::size_t read = 0;
+  std::size_t write = 0;
+  const std::size_t n = text.size();
+
+  while (read < n) {
+    if (read + 2 < n && isSmileyStart(text, read) && isFaceChar(text[read + 2])) {
+      const char paren = text[read + 2];
+      read += 3;
+      while (read < n && text[read] == paren) {
+        ++read;
+      }
+    } else {
+      text[write] = text[read];
+      ++read;
+      ++write;
     }
-    return text;
+  }
+  text.resize(write);
+  return text;
 }

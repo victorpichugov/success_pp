@@ -71,3 +71,58 @@
 //      решении и как его обобщить, не переписывая цикл?
 //
 // ФОРМАТ СДАЧИ: "готово" + полный вывод ./t (или текст ошибки компиляции).
+
+
+#include "smiley_remover.h"
+#include <iostream>
+#include <vector>
+#include <string>
+#include <chrono>
+
+int main() {
+  int failures = 0;
+  const std::vector<std::string> test_cases = {
+    "", "hello", "hi :-) w", ":-", ":- ) x",
+    ":-)))", ":-(((", "x:-)))y", ":-)( ",
+    ":-)-", ":-) :-(", "a:-)b:-)c"
+  };
+  const std::vector<std::string> ans_cases = {
+    "", "hello", "hi  w", ":-", ":- ) x",
+    "", "", "xy", "( ", "-", " ", "abc"
+  };
+
+  for (std::size_t i = 0; i < test_cases.size(); ++i) {
+    if (RemoveSmileys(test_cases[i]) != ans_cases[i]) {
+      std::cout << i << " тест провалился\n" << std::endl;
+      std::cout << "Ожидание " << ans_cases[i] << std::endl;
+      std::cout << "Факт " << RemoveSmileys(test_cases[i]) << std::endl;
+      failures++;
+    }
+  }
+  const std::size_t N = 50000;
+  std::string big;
+  big.reserve(N * 4);
+  for (std::size_t i = 0; i < N; ++i) {
+    big += ":-) ";
+  }
+  const auto start = std::chrono::steady_clock::now();
+  const std::string result = RemoveSmileys(big);
+  const auto end = std::chrono::steady_clock::now();
+  const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+      end - start);
+  std::cout << "PERF: ms = " << ms.count() << std::endl;
+
+  if (result != std::string(N, ' ')) {
+    failures++;
+    std::cout << "PERF accuracy failed: size = " << result.size()
+              << ", expected = " << N << std::endl;
+  }
+  if (ms.count() >= 200) {
+    failures++;
+    std::cout << "PERF time failed: " << ms.count() << " ms >= 200"
+              << std::endl;
+  }
+
+  std::cout << (failures == 0 ? "ALL TESTS PASSED" : "TESTS FAILED");
+  return failures;
+}
