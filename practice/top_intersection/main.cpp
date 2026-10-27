@@ -79,3 +79,50 @@
 //      на ИСХОДНЫХ отсортированных списках, порядок — уже есть.)
 //
 // ФОРМАТ СДАЧИ: "готово" + полный вывод ./t (или текст ошибки компиляции).
+
+#include "top_intersection.h"
+#include <vector>
+#include <cstddef>
+#include <iostream> // size_t
+
+int main() {
+
+    std::vector<std::vector<int>> test_top_a = {
+        {1,2,3}, {1,2}, {}, {1,2,3}, {7}, {5,3,9}, 
+        {1,1,2,1}, {3,3,3}, {}
+    };
+    std::vector<std::vector<int>> test_top_b = {
+        {1,2,3}, {3,4}, {1,2}, {}, {7}, {3,5,9,7}, 
+        {1,2,2}, {3}, {}
+    };
+    std::vector<std::vector<int>> test_ans = {
+        {1,2,3}, {}, {}, {}, {7}, {5,3,9}, {1,2}, 
+        {3}, {}
+    };
+    int failures = 0;
+
+    for (std::size_t i = 0; i < test_top_a.size(); ++i)
+    {
+        if (IntersectTops(test_top_a[i], test_top_b[i]) != test_ans[i]) {
+            failures += 1;
+            std::cout << i << " тест провалился" << std::endl;
+            std::cout << "Ожидание " << test_ans[i] << std::endl;
+            std::cout << "Факт " << IntersectTops(test_top_a[i], test_top_b[i]) << std::endl;
+            failures += 1;
+        }
+    }
+
+    std::cout << (failures == 0 ? "ALL TESTS PASSED" : "TESTS FAILED");
+    
+    return failures;
+}
+
+
+//    - top_a = {1,2,3},   top_b = {1,2,3}  -> {1,2,3}   (совпадение)
+//    - top_a = {1,2},     top_b = {3,4}    -> {}         (нет пересечения)
+//    - top_a = {},        top_b = {1,2}    -> {}         (пустой a)
+//    - top_a = {1,2,3},   top_b = {}       -> {}         (пустой b)
+//    - top_a = {7},       top_b = {7}      -> {7}        (один элемент)
+//    - top_a = {5,3,9},   top_b = {3,5,9,7}-> {5,3,9}    (порядок top_a!)
+//    - top_a = {1,1,2,1}, top_b = {1,2,2}  -> {1,2}      (дубликаты)
+//    - top_a = {3,3,3},   top_b = {3}      -> {3}        (много дублей в a)
