@@ -1,37 +1,25 @@
 #include <iostream>
 #include <cmath>
 #include "calendar.h"
+#include "caldat.h"
 #include <vector>
 
-class Test {
-    private:
 
-    public:
-        
-}
+double _the_number_of_combinations(const int n, int k) {
+    std::vector<double> bnm(n + 1);
+    bnm[0] = 1;
+    int k0 = 1;
 
-class main
-{
-private:
-    /* data */
-public:
-    main(/* args */);
-    ~main();
-};
-
-main::main(/* args */)
-{
-}
-
-main::~main()
-{
+    while (k0 < k) {
+        bnm[k0 + 1] = bnm[k0] * (n - k0) / (k0 + 1);
+        bnm[n - k0] = bnm[k0];
+        k0 += 1; 
+    }
+    return bnm[k0];
 }
 
 
 int main() {
-    int x = 1;
-
-    std::vector<int> x(10);
-    std::cout << julday(x, 2, 3);
+    std::cout << _the_number_of_combinations(10, 3);
     return 0;
 }
