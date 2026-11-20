@@ -8,7 +8,8 @@
 void rotate(
     std::vector<std::vector<int>> &ans, 
     std::vector<std::vector<int>> field,
-    size_t n, size_t m) {
+    size_t n, size_t m
+) {
     for (size_t i = 0; i < n; ++i) {
         for (size_t j = 0; j < m; ++j) {
             ans[j][n - 1 - i] = field[i][j];
